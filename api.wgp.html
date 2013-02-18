@@ -1,0 +1,84 @@
+ <div id="console"></div>
+<script src="/test/web/assets/js/jquery.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!--
+<script src="/api/jquery-ui/1.9.2/js/jquery-ui-1.9.2.custom.min.js"></script>
+-->
+<script src="api.wgp.js"></script >
+<script>
+api = new wagapi();
+api.setUsername('aValidUsername'); //enter valid username
+api.setPassword('aValidPassword');
+//$("#coucou").queue(api.connect(function(is_connected,status){/*alert(status);*/})).queue(api.doRequest({action:"/list/tags/all"},function(data){
+//	var tags = data['tags'].join('/');
+//	console.log(tags);
+//	}));
+//api.connect(function(is_connected,status){/*alert(status);*/});
+//alert(api.getSessionParameters());
+//window.setTimeout(function(){},2000);
+/*api.doRequest({action:"/list/tags/all"},function(data){
+	var tags = data['tags'].join('/');
+	console.log(tags);
+	});*/
+/*
+api.request({action:"/list/tags/all"},function(data){
+	var tags = data['tags'].join('/');
+	console.log(tags);
+	});
+api.request({action:"/list/tags/all"},function(data){
+	var tags = data['tags'].join('/');
+	console.log(tags);
+	});
+*//*
+api.request({action:"/list/tags/all"},
+	{
+		200 : function(data){
+				var tags = data['tags'].join('/');
+				console.log(tags);
+				},
+		401 : function(){
+				console.log('Connection failed');
+			}
+	}
+	);	
+	*/
+	
+api.listDocsFromPath({path:['test1','test2']},function(data){
+													console.log(data['index'].join('/'));
+													});	
+	
+var ids = undefined;	
+var tagsArray = [];
+var tagToExplore = Array();
+api.listTagsAll( {200:	function(data){
+							tagsArray = data['tags'];
+							var tags = data['tags'].join('/');
+							console.log(tags);
+							
+							tagToExplore.push(tagsArray[0]);
+							api.listDocsFromPath({path: tagToExplore},
+								function(data){
+												var example = data['index'].join('/');
+												console.log(example);
+												ids = data['index'];
+
+												//$('#console').html($('#console').html()+"</br>"+ids)
+												//var ids = data['files'].join('</br>');
+												//console.log(tagsArray[0]);
+										}
+								
+
+							);					
+						}
+				}
+
+);
+
+api.addDocsToPath({index: ['4','6'],path:['test1','test2']});
+api.listDocsFromPath({path:['test1','test2']}, {200:	function(data){
+													console.log(data['index'].join('/'));
+													}});
+api.remDocsFromPath({index: ['4','6'],path:['test1','test2']});
+api.listDocsFromPath({path:['test1','test2']},{200:	function(data){console.log(data['index'].join('/'));}});
+
+</script >
