@@ -1,9 +1,14 @@
 wagapi = function (){
 
 	var that = this;
-	
-	var isConnected = false;
 
+	var isConnected = false;
+	
+	this.connected = function(){
+		return isConnected;
+	}	
+	
+	
 	//http://stackoverflow.com/questions/899102/how-do-i-store-javascript-functions-in-a-queue-for-them-to-be-executed-eventuall
 	this.queue = new (function(){
 		var isOn = false;
